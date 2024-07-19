@@ -22,6 +22,21 @@ import ChangeMonth from "./Calendar/ChangeMonth";
 function Calendar() {
   const [mesAtual, setMesAtual] = useState(new Date().getMonth());
   const [anoAtual, setAnoAtual] = useState(new Date().getFullYear());
+  const [open, setOpen] = useState(false);
+  const appointments = ["2023-05-02", "2023-05-05", "2024-05-05", "2024-05-27"];
+
+  function openDetails(dia) {
+    alert(dia + "/" + (mesAtual + 1) + "/" + anoAtual);
+    setOpen(true);
+  }
+
+  const hasAppointment = (day) => {
+    const formateDay = day > 9 ? day : "0" + day;
+    const month = mesAtual + 1;
+    const formateMonth = month > 9 ? month : "0" + month;
+    const formateDate = anoAtual + "-" + formateMonth + "-" + formateDay;
+    return appointments.includes(formateDate);
+  };
 
   // Função para renderizar a matriz com os dias do mês
   const renderMatriz = (month, year) => {
@@ -42,9 +57,21 @@ function Calendar() {
           linha.push(<TableCell key={`${i}-${j}`} align="center" />);
         } else {
           // Preenche com o dia do mês
+          let dia = diasDoMes[contadorDias - 1];
           linha.push(
-            <TableCell key={`${i}-${j}`} align="center">
-              {diasDoMes[contadorDias - 1]}
+            <TableCell
+              key={`${i}-${j}`}
+              align="center"
+              onClick={() => openDetails(dia)}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "blue !important",
+                },
+                cursor: "pointer",
+                backgroundColor: hasAppointment(dia) ? "red" : "",
+              }}
+            >
+              {dia}
             </TableCell>
           );
           contadorDias++;

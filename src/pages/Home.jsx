@@ -4,8 +4,9 @@ import MenuApp from "../components/MenuApp";
 
 export default function Home() {
   return (
-    <MenuApp width={1}>
+    <>
+      <MenuApp width={1} />
       <Calendar />
-    </MenuApp>
+    </>
   );
 }
